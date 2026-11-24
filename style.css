@@ -1,0 +1,65 @@
+/* Polices hébergées avec la page (SIL OFL 1.1, licences dans fonts/). */
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('fonts/cinzel-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('fonts/cinzel-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('fonts/inter-cyrillic-ext.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0c0f;
+  --surface: #10141a;
+  --surface-2: #151a21;
+  --line: #232b35;
+  --gold: #d6b46a;
+  --gold-soft: #ecd39a;
+  --text: #ece6d6;
+  --muted: #a3abb5;
+  --faint: #7b8591;
+  --ok: #6fbf73;
+  --warn: #e0a84a;
+  --down: #e06a5a;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at top, #1a1f28 0%, var(--bg) 60%); color: var(--text); font: 16px/1.55 'Inter', system-ui, sans-serif; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.status { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; display: flex; flex-direction: column; gap: 20px; }
+.status-head { display: flex; align-items: center; gap: 14px; }
+.status-head img { border-radius: 14px; box-shadow: 0 0 0 1px var(--line), 0 6px 18px rgba(0, 0, 0, 0.5); }
+.status-head > div { flex: 1; min-width: 0; }
+.status-eyebrow { margin: 0; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+h1 { margin: 0; font-family: 'Cinzel', 'Inter', serif; font-weight: 700; font-size: 1.7rem; color: var(--gold-soft); }
+h2 { margin: 0 0 10px; font-family: 'Cinzel', 'Inter', serif; font-size: 1.05rem; color: var(--gold); }
+.status-lang select { min-height: 40px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text); font: inherit; }
+section { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.status-message { border-color: var(--gold-dim, #9a8049); background: color-mix(in srgb, var(--gold) 9%, var(--surface)); }
+.status-message p { margin: 0; white-space: pre-line; }
+.status-list ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.status-item { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'dot name open' 'dot state open'; align-items: center; column-gap: 12px; padding: 12px; border-radius: 10px; background: var(--surface-2); }
+.status-dot { grid-area: dot; width: 14px; height: 14px; border-radius: 50%; background: var(--faint); box-shadow: 0 0 0 4px color-mix(in srgb, var(--faint) 20%, transparent); }
+.status-name { grid-area: name; font-weight: 600; }
+.status-state { grid-area: state; font-size: 0.9rem; color: var(--muted); }
+.status-open { grid-area: open; color: var(--gold); text-decoration: none; font-size: 0.9rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; }
+.status-open:hover { border-color: var(--gold); }
+.status-item[data-state="ok"] .status-dot { background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent); }
+.status-item[data-state="ok"] .status-state { color: var(--ok); }
+.status-item[data-state="degraded"] .status-dot { background: var(--warn); box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 22%, transparent); }
+.status-item[data-state="degraded"] .status-state { color: var(--warn); }
+.status-item[data-state="down"] .status-dot { background: var(--down); box-shadow: 0 0 0 4px color-mix(in srgb, var(--down) 22%, transparent); }
+.status-item[data-state="down"] .status-state { color: var(--down); }
+.status-item[data-state="checking"] .status-dot { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .status-item[data-state="checking"] .status-dot { animation: none; } }
+.status-summary { margin: 14px 0 4px; font-weight: 600; }
+.status-faint { margin: 6px 0 0; font-size: 0.85rem; color: var(--faint); }
+.status-link { padding: 0; border: 0; background: none; color: var(--gold); font: inherit; text-decoration: underline; cursor: pointer; }
+.status-help p { margin: 0; color: var(--muted); }
+.status-foot { padding: 0 4px; font-size: 0.8rem; color: var(--faint); }
+.status-foot p { margin: 0; }
+@media (max-width: 420px) {
+  h1 { font-size: 1.35rem; }
+  .status-item { grid-template-columns: auto 1fr; grid-template-areas: 'dot name' 'dot state' '. open'; row-gap: 6px; }
+  .status-open { justify-self: start; }
+}

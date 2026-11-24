@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Page d'état de l'appli et du site, hébergée hors du serveur maison (GitHub Pages) : elle reste joignable pendant une coupure.
+       Rien n'est chargé d'ailleurs ; seules les deux sondes d'état sont interrogées, depuis le navigateur du visiteur. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self' https://appjdr.duckdns.org:27563 https://sitejdr.duckdns.org:27568; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <title>App JDR — état du service</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="status" aria-live="polite">
+    <header class="status-head">
+      <img src="icon-192.png" alt="" width="56" height="56">
+      <div>
+        <p class="status-eyebrow" data-i18n="eyebrow">App JDR</p>
+        <h1 data-i18n="title">État du service</h1>
+      </div>
+      <label class="status-lang">
+        <span class="sr-only" data-i18n="language">Langue</span>
+        <select id="lang"></select>
+      </label>
+    </header>
+
+    <section id="message" class="status-message" hidden>
+      <h2 data-i18n="messageTitle">Message de l'hébergeur</h2>
+      <p id="message-text"></p>
+      <p id="message-date" class="status-faint"></p>
+    </section>
+
+    <section class="status-list" aria-labelledby="services-title">
+      <h2 id="services-title" data-i18n="services">Services</h2>
+      <ul>
+        <li class="status-item" id="svc-app" data-state="checking">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-name" data-i18n="app">L'application</span>
+          <span class="status-state" data-i18n="checking">Vérification…</span>
+          <a class="status-open" href="https://appjdr.duckdns.org:27563" data-i18n="open" rel="noopener">Ouvrir</a>
+        </li>
+        <li class="status-item" id="svc-site" data-state="checking">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-name" data-i18n="site">Le site de présentation</span>
+          <span class="status-state" data-i18n="checking">Vérification…</span>
+          <a class="status-open" href="https://sitejdr.duckdns.org:27568" data-i18n="open" rel="noopener">Ouvrir</a>
+        </li>
+      </ul>
+      <p id="summary" class="status-summary"></p>
+      <p class="status-faint"><span data-i18n="checkedAt">Dernière vérification :</span> <time id="checked-at">—</time> · <button type="button" id="recheck" class="status-link" data-i18n="recheck">Vérifier maintenant</button></p>
+    </section>
+
+    <section class="status-help">
+      <h2 data-i18n="helpTitle">Pendant une coupure</h2>
+      <p data-i18n="help">L'application est hébergée chez nous : une coupure d'Internet ou de courant la rend injoignable. Rien n'est perdu : tout reprend dès le retour de la connexion. Cette page se met à jour toute seule.</p>
+    </section>
+
+    <footer class="status-foot">
+      <p data-i18n="footer">Cette page est hébergée par GitHub Pages, hors de notre serveur. Elle ne dépose aucun cookie et ne mesure rien.</p>
+    </footer>
+  </main>
+  <script src="status.js"></script>
+</body>
+</html>

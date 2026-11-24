@@ -1,0 +1,6 @@
+{
+  "_aide": "Laisse « fr » vide quand tout va bien. Pendant une panne, écris un message (et sa traduction anglaise si tu veux), puis mets la date dans « date » (AAAA-MM-JJ HH:MM).",
+  "fr": "",
+  "en": "",
+  "date": ""
+}
