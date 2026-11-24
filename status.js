@@ -107,6 +107,21 @@ const T = {
   },
 };
 
+// Drapeaux dessinés en SVG (les émojis drapeaux ne s'affichent pas sous Windows) ; rien n'est chargé d'ailleurs.
+const svg = (body) => `<svg viewBox="0 0 30 20" width="30" height="20" aria-hidden="true" focusable="false">${body}</svg>`;
+const FLAGS = {
+  fr: svg('<rect width="10" height="20" fill="#0055a4"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ef4135"/>'),
+  en: svg('<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#c8102e" stroke-width="1.6"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="6"/><path d="M15 0V20M0 10H30" stroke="#c8102e" stroke-width="3.4"/>'),
+  es: svg('<rect width="30" height="20" fill="#aa151b"/><rect y="5" width="30" height="10" fill="#f1bf00"/>'),
+  de: svg('<rect width="30" height="7" fill="#000"/><rect y="6.66" width="30" height="6.67" fill="#dd0000"/><rect y="13.33" width="30" height="6.67" fill="#ffce00"/>'),
+  it: svg('<rect width="10" height="20" fill="#009246"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ce2b37"/>'),
+  pt: svg('<rect width="12" height="20" fill="#006600"/><rect x="12" width="18" height="20" fill="#ff0000"/><circle cx="12" cy="10" r="4.2" fill="#ffcc00"/><circle cx="12" cy="10" r="2.6" fill="#fff" stroke="#ff0000" stroke-width="0.8"/>'),
+  ja: svg('<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#bc002d"/>'),
+  zh: svg('<rect width="30" height="20" fill="#de2910"/><path d="M5 2.5l1.2 3.6h3.8l-3.1 2.2 1.2 3.6-3.1-2.2-3.1 2.2 1.2-3.6-3.1-2.2h3.8z" fill="#ffde00"/><circle cx="10.5" cy="2.8" r="0.8" fill="#ffde00"/><circle cx="12.3" cy="5" r="0.8" fill="#ffde00"/><circle cx="12.3" cy="8" r="0.8" fill="#ffde00"/><circle cx="10.5" cy="10.2" r="0.8" fill="#ffde00"/>'),
+  ru: svg('<rect width="30" height="7" fill="#fff"/><rect y="6.66" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/>'),
+  ko: svg('<rect width="30" height="20" fill="#fff"/><path d="M15 6a4 4 0 0 1 0 8a2 2 0 0 1 0-4a2 2 0 0 0 0-4z" fill="#0047a0"/><path d="M15 6a4 4 0 0 0 0 8a2 2 0 0 0 0-4a2 2 0 0 1 0-4z" fill="#cd2e3a"/><path d="M4 4l3 2M4.6 3.2l3 2M5.2 2.4l3 2M22 15.6l3 2M22.6 14.8l3 2M23.2 14l3 2M22 4.4l3-2M22.6 5.2l3-2M23.2 6l3-2M4 15.6l3 2M4.6 16.4l3-2M5.2 17.2l3-2" stroke="#000" stroke-width="0.7"/>'),
+};
+
 const readLang = () => { try { return localStorage.getItem('statut-lang'); } catch { return null; } };
 const writeLang = (lang) => { try { localStorage.setItem('statut-lang', lang); } catch { /* navigation privée */ } };
 const browserLang = (navigator.language || 'fr').slice(0, 2).toLowerCase();
@@ -119,6 +134,7 @@ const tr = (key, vars = {}) => (T[lang][key] ?? T.fr[key] ?? key).replace(/\{(\w
 
 function render() {
   document.documentElement.lang = lang;
+  renderLangButton();
   document.title = `App JDR — ${tr('title')}`;
   for (const node of document.querySelectorAll('[data-i18n]')) {
     const key = node.dataset.i18n;
@@ -183,15 +199,37 @@ async function check() {
   render();
 }
 
-const select = document.getElementById('lang');
-for (const [code, name] of Object.entries(LANGS)) {
-  const option = document.createElement('option');
-  option.value = code;
-  option.textContent = name;
-  select.append(option);
+// Choix de la langue : un bouton au drapeau de la langue en cours ouvre la liste des drapeaux (le nom de chaque langue en bulle d'aide
+// et pour les lecteurs d'écran).
+const langButton = document.getElementById('lang-button');
+const langMenu = document.getElementById('lang-menu');
+function closeLangMenu() { langMenu.hidden = true; langButton.setAttribute('aria-expanded', 'false'); }
+function renderLangButton() {
+  langButton.innerHTML = FLAGS[lang];
+  langButton.setAttribute('aria-label', `${tr('language')} : ${LANGS[lang]}`);
+  langButton.title = LANGS[lang];
+  for (const item of langMenu.children) item.setAttribute('aria-checked', String(item.dataset.lang === lang));
 }
-select.value = lang;
-select.addEventListener('change', () => { lang = select.value; writeLang(lang); render(); });
+for (const [code, name] of Object.entries(LANGS)) {
+  const item = document.createElement('button');
+  item.type = 'button';
+  item.className = 'status-flag';
+  item.dataset.lang = code;
+  item.setAttribute('role', 'menuitemradio');
+  item.setAttribute('aria-label', name);
+  item.title = name;
+  item.innerHTML = FLAGS[code];
+  item.addEventListener('click', () => { lang = code; writeLang(lang); closeLangMenu(); render(); langButton.focus(); });
+  langMenu.append(item);
+}
+langButton.addEventListener('click', () => {
+  const open = langMenu.hidden;
+  langMenu.hidden = !open;
+  langButton.setAttribute('aria-expanded', String(open));
+  if (open) langMenu.querySelector('[aria-checked="true"]')?.focus();
+});
+document.addEventListener('click', (event) => { if (!event.target.closest('.status-lang')) closeLangMenu(); });
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !langMenu.hidden) { closeLangMenu(); langButton.focus(); } });
 document.getElementById('recheck').addEventListener('click', check);
 window.addEventListener('online', check);
 window.addEventListener('offline', render);

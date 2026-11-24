@@ -32,7 +32,17 @@ body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at top,
 .status-eyebrow { margin: 0; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
 h1 { margin: 0; font-family: 'Cinzel', 'Inter', serif; font-weight: 700; font-size: 1.7rem; color: var(--gold-soft); }
 h2 { margin: 0 0 10px; font-family: 'Cinzel', 'Inter', serif; font-size: 1.05rem; color: var(--gold); }
-.status-lang select { min-height: 40px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text); font: inherit; }
+/* Choix de la langue par drapeaux. */
+.status-lang { position: relative; }
+.status-lang-button, .status-flag { display: inline-flex; align-items: center; justify-content: center; padding: 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); cursor: pointer; }
+.status-lang-button { min-width: 48px; min-height: 40px; }
+.status-lang-button::after { content: ''; margin-left: 6px; border: 5px solid transparent; border-top-color: var(--muted); transform: translateY(3px); }
+.status-lang svg { display: block; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18); }
+.status-lang-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 10; display: grid; grid-template-columns: repeat(5, auto); gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); }
+.status-lang-menu[hidden] { display: none; }
+.status-flag { min-width: 44px; min-height: 36px; }
+.status-flag:hover, .status-flag:focus-visible, .status-lang-button:hover, .status-lang-button:focus-visible { border-color: var(--gold); outline: none; }
+.status-flag[aria-checked="true"] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, var(--surface-2)); }
 section { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
 .status-message { border-color: var(--gold-dim, #9a8049); background: color-mix(in srgb, var(--gold) 9%, var(--surface)); }
 .status-message p { margin: 0; white-space: pre-line; }

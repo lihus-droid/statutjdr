@@ -20,10 +20,10 @@
         <p class="status-eyebrow" data-i18n="eyebrow">App JDR</p>
         <h1 data-i18n="title">État du service</h1>
       </div>
-      <label class="status-lang">
-        <span class="sr-only" data-i18n="language">Langue</span>
-        <select id="lang"></select>
-      </label>
+      <div class="status-lang">
+        <button type="button" id="lang-button" class="status-lang-button" aria-haspopup="true" aria-expanded="false"></button>
+        <div id="lang-menu" class="status-lang-menu" role="menu" hidden></div>
+      </div>
     </header>
 
     <section id="message" class="status-message" hidden>
